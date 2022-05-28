@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, CardImg, CardText, CardBody, CardTitle, Media } from 'reactstrap'; 
+import {Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap'; 
 
 class DishDetail extends Component {
 
@@ -7,22 +7,39 @@ class DishDetail extends Component {
         super(props);
     }
 
-    renderComments(comments){
-        // console.log(comments);
-        const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-        const __comment = comments.map((_comment)=> {
-            // console.log(_comment.date.split('T')[0].split('-'));
-            var date = _comment.date.split('T')[0].split('-');
-            return (
-                <div key={_comment.id}>
-                    <p>{_comment.comment}</p>
-                    
-                    <p>-- {_comment.author}, {month[parseInt(date[1])-1]} {date[2]}, {date[0]}</p>
-                </div>
+    renderDish(dish){
+        if(dish){
+            return(
+                <Card>
+                    {console.log(this.props.dish)}
+                    <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
+                    <CardBody>
+                        <CardTitle>{this.props.dish.name}</CardTitle>
+                        <CardText>{this.props.dish.description}</CardText>
+                    </CardBody>
+                </Card>
             );
-        });
+        }
+        else{
+            return(<div></div>);
+            
+        }
+    }
 
-        if(comments){
+    renderComments(dish){
+
+        if(dish){
+            var comments = dish.comments;
+            const __comment = comments.map((_comment)=> {
+                return (
+                    
+                        <div key={_comment.id}>
+                            <p>{_comment.comment}</p>
+                            <p>-- {_comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(_comment.date)))}</p>
+                        </div>
+                    
+                );
+            });
             return (
                 <div>{__comment}</div>
             );
@@ -36,19 +53,18 @@ class DishDetail extends Component {
 
     render(){
         return (
-            <div className='row'>
+            <div className='container'>
+                <div className='row'>
                 <div className='col-12 col-md-5 m-1'>
-                    <Card>
-                        <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
-                        <CardBody>
-                            <CardTitle>{this.props.dish.name}</CardTitle>
-                            <CardText>{this.props.dish.description}</CardText>
-                        </CardBody>
-                    </Card>
+                    {this.renderDish(this.props.dish)}
                 </div>
-                <div className='col-12 col-md-5 m-1'>
-                    <h4>Comments</h4>
-                    {this.renderComments(this.props.dish.comments)}
+                {this.props.dish ? (
+                    <div className='col-12 col-md-5 m-1'>
+                        <h4>Comments</h4>
+                        {this.renderComments(this.props.dish)}
+                    </div>
+                ) : (<div></div>)}
+                    
                 </div>
             </div>
         );
