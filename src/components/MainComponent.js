@@ -29,7 +29,7 @@ class Main extends Component {
           </div>
         </Navbar>
         <Menu dishes={this.state.dishes} onClick={(dishID) => this.onDishSelect(dishID)}/>
-        {console.log(this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0])}
+        {/* {console.log("yes", this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0])} */}
         <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}/>
       </div>
     );
