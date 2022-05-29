@@ -1,13 +1,56 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 
 class Header extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      isNavOpen: false
+    };
+
+    this.toggleNav = this.toggleNav.bind(this);
+  }
+
+  toggleNav(){
+    this.setState({
+      isNavOpen: !this.state.isNavOpen
+    });
+  }
+
   render() {
     return(
     <React.Fragment>
-      <Navbar dark>
+      <Navbar dark expand='md'>
         <div className="container">
-            <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
+            <NavbarToggler onClick={this.toggleNav}/>
+            <NavbarBrand className='mr-auto' href="/"><img src='assets/images/logo.png' height="30" width="41" alt='Ristorante Con Fusion'/></NavbarBrand>
+            <Collapse isOpen={this.state.isNavOpen} navbar>
+              <Nav navbar>
+                <NavItem>
+                  <Link className='nav-link' to='/home'>
+                    <span className='fa fa-home fa-lg' /> Home
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link className='nav-link' to='/aboutus'>
+                    <span className='fa fa-info fa-lg' /> About Us
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link className='nav-link' to='/menu'>
+                    <span className='fa fa-list fa-lg' /> Menu
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link className='nav-link' to='/contactus'>
+                    <span className='fa fa-address-card fa-lg' /> Contact Us
+                  </Link>
+                </NavItem>
+              </Nav>
+            </Collapse>
         </div>
       </Navbar>
       <div class='jumbotron'>
