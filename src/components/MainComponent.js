@@ -3,9 +3,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Menu from './MenuComponent';
 // import DishDetail from './DishDetailComponent';
 import { DISHES } from '../shared/dishes';
+import { COMMENTS } from '../shared/comments';
+import { LEADERS } from '../shared/leaders';
+import { PROMOTIONS } from '../shared/promotions';
 import Header from './Header';
 import Footer from './Footer';
 import Home from './HomeComponent';
+import Contact from './ContactComponent';
 
 class Main extends Component {
 
@@ -13,6 +17,9 @@ class Main extends Component {
     super(props);
     this.state = {
       dishes: DISHES,
+      comments: COMMENTS,
+      leaders: LEADERS,
+      promotions: PROMOTIONS
     };
   }
 
@@ -23,8 +30,13 @@ class Main extends Component {
         {/* <Menu dishes={this.state.dishes} onClick={(dishID) => this.onDishSelect(dishID)}/> */}
         {/* <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}/> */}
         <Routes>
-          <Route path='/home' element={<Home />}/>
+          <Route path='/home' element={<Home 
+            dish={this.state.dishes.filter((dish) => dish.featured)[0]}
+            promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
+            leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+          />}/>
           <Route exact path='/menu' element={<Menu dishes={this.state.dishes}/>}/>
+          <Route exact path='/contactus' element={<Contact />}/>
           <Route path="*" element={<Navigate to ="/home" />}/>
         </Routes>
         <Footer />
