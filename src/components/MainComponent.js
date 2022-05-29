@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom'; 
+import { Routes, Route, Navigate, useParams } from 'react-router-dom'; 
 import Menu from './MenuComponent';
-// import DishDetail from './DishDetailComponent';
+import DishDetail from './DishDetailComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { LEADERS } from '../shared/leaders';
@@ -23,6 +23,16 @@ class Main extends Component {
     };
   }
 
+  DishWithId = (params) => {
+    let { dishID } = useParams();
+    // console.log(this.state.comments.filter((comment) => comment.dishId === parseInt(dishID,10))[0]);
+    return (
+      <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(dishID,10))[0]}
+      comments={this.state.comments.filter((comment) => comment.dishId === parseInt(dishID,10))}
+      />
+    );
+  }
+
   render(){
       return (
       <div>
@@ -36,6 +46,7 @@ class Main extends Component {
             leader={this.state.leaders.filter((leader) => leader.featured)[0]}
           />}/>
           <Route exact path='/menu' element={<Menu dishes={this.state.dishes}/>}/>
+          <Route exact path='/menu/:dishID' element={<this.DishWithId />} />
           <Route exact path='/contactus' element={<Contact />}/>
           <Route path="*" element={<Navigate to ="/home" />}/>
         </Routes>
