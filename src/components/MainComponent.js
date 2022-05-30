@@ -10,6 +10,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 
 class Main extends Component {
 
@@ -46,8 +47,9 @@ class Main extends Component {
             leader={this.state.leaders.filter((leader) => leader.featured)[0]}
           />}/>
           <Route exact path='/menu' element={<Menu dishes={this.state.dishes}/>}/>
-          <Route exact path='/menu/:dishID' element={<this.DishWithId />} />
+          <Route path='/menu/:dishID' element={<this.DishWithId />} />
           <Route exact path='/contactus' element={<Contact />}/>
+          <Route exact path='/aboutus' element={<About leaders={this.state.leaders}/>}/>
           <Route path="*" element={<Navigate to ="/home" />}/>
         </Routes>
         <Footer />
