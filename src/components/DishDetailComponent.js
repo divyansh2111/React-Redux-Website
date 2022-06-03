@@ -3,6 +3,7 @@ import {Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem
     Modal, ModalHeader, ModalBody, Row, Col, Label } from 'reactstrap'; 
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { toHaveAccessibleDescription } from '@testing-library/jest-dom/dist/matchers';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -27,9 +28,9 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        console.log('Current Comment is: ' + JSON.stringify(values));
-        alert('Current Comment is: ' + JSON.stringify(values));
-        // event.preventDefault();
+        this.toggleModal();
+        console.log("YO\n", values);
+        this.props.addComment(this.props.dishId, values.rating, values.yourname, values.comment);
     }
 
     render() {
@@ -167,7 +168,8 @@ class CommentForm extends Component {
                             <div className='col-12 col-md-5 m-1'>
                                 <h4>Comments</h4>
                                 <RenderComments comments={props.comments}/>
-                                <CommentForm />
+                                <CommentForm addComment={props.addComment}
+                                    dishId={props.dish.id}/>
                             </div>
                     ) : (<div></div>)}
                         
