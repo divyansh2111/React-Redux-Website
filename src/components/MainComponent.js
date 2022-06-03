@@ -18,6 +18,7 @@ const mapStateToProps = state => {
   }
 }
 
+
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
     let location = useLocation();
