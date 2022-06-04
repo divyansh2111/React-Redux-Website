@@ -50,11 +50,6 @@ function withRouter(Component) {
 
 class Main extends Component {
 
-  constructor(props) {
-    super(props);
-
-  }
-
   DishWithId = (params) => {
     let { dishID } = useParams();
     // console.log("fff", this.props.dishes.dishes.filter((dish) => dish.id === parseInt(dishID,10))[0]);
